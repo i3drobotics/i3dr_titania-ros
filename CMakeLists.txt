@@ -14,3 +14,11 @@ catkin_package(
 
 link_directories()
 add_definitions(-std=c++11)
+
+set (vimba_install_cmd "./vimba/install.sh")
+message(STATUS "Running Vimba install command: ${vimba_install_cmd}")
+execute_process(COMMAND ${vimba_install_cmd}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+  OUTPUT_VARIABLE vimba_install_output)
+
+message(STATUS "Vimba install response: ${vimba_install_output}")

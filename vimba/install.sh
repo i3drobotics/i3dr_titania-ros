@@ -1,3 +1,9 @@
+# check vimba is already installed
+if [ ! -z "${GENICAM_GENTL64_PATH}" ]; then
+  echo "vimba already installed"
+  exit 0
+fi
+
 curl 'https://www.alliedvision.com/en/products/software.html?tx_avdownloads_downloads\[action\]=download&tx_avdownloads_downloads\[controller\]=List&cHash=8a61af6c07dfdafa563b4a95458f1082' \
   -H 'Connection: keep-alive' \
   -H 'Cache-Control: max-age=0' \
