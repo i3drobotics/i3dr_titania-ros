@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>i3dr_titania</name>
+  <version>0.0.1</version>
+  <description>
+     Titania stereo camera from Industrial 3D Robotics
+  </description>
+
+  <maintainer email="bknight@i3drobotics.com">Ben Knight</maintainer>
+  <author email="bknight@i3drobotics.com">Ben Knight</author>
+  
+  <license>GPLv2</license>
+
+  <url type="website">https://github.com/i3drobotics/i3dr_titania-ros</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>camera_info_manager</depend>
+  <depend>std_msgs</depend>
+  <depend>avt_vimba_camera</depend>
+  <depend>i3dr_stereo_camera</depend>
+
+</package>
