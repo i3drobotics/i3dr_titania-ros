@@ -1,6 +1,5 @@
-#include "ros/ros.h"
-#include "std_msgs/String.h"
 #include <VimbaCPP/Include/VimbaCPP.h>
+#include "iostream"
 
 using namespace AVT::VmbAPI;
 
@@ -21,19 +20,4 @@ void listCameras(){
     }
     std::cout << "Cameras found: " << cameras.size() << std::endl;
     vimba_system.Shutdown();
-}
-
-int main(int argc, char **argv, char **envp)
-{
-    // Adding this line causes no cameras to be found
-    ros::init(argc, argv, "vimba_api");
-
-    // List available vimba cameras
-    listCameras();
-    
-    
-    //ros::NodeHandle n;
-    //if (ros::ok()){
-    //}
-    //ros::spin();
 }

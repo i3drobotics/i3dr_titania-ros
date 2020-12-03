@@ -23,6 +23,7 @@ if (NOT VIMBA_FOUND)
 endif()
 
 include_directories(
+    include
     ${catkin_INCLUDE_DIRS}
     ${vimba_INCLUDE_DIRS}
 )
@@ -34,8 +35,14 @@ catkin_package(
 link_directories()
 add_definitions(-std=c++11)
 
-add_executable(vimba_api_node src/vimba_api_node.cpp)
-target_link_libraries(vimba_api_node 
+add_executable(vimba_list_cameras src/vimba_list_cameras.cpp)
+target_link_libraries(vimba_list_cameras 
+  ${catkin_LIBRARIES}
+  ${vimba_LIBRARIES}
+)
+
+add_executable(vimba_list_cameras_node src/vimba_list_cameras_node.cpp)
+target_link_libraries(vimba_list_cameras_node 
   ${catkin_LIBRARIES}
   ${vimba_LIBRARIES}
 )
