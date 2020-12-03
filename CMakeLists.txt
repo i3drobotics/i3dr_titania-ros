@@ -7,8 +7,8 @@ find_package(catkin REQUIRED roscpp std_msgs tf rospy message_generation)
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Download and install Vimba SDK in package directory using 'install.sh' script
-# Will also set GENICAM_GENTL64_PATH environment variable for vimba USB and GigE TL
-# This will be skipped if the Vimba_4_2 folder already exists
+# Will also set GENICAM_GENTL64_PATH environment variable for Vimba USB and GigE TL
+# This will be skipped if the VimbaSDK folder already exists
 set (vimba_install_cmd "./vimba/install.sh")
 message(STATUS "Running Vimba install command: ${vimba_install_cmd}")
 execute_process(COMMAND ${vimba_install_cmd}
@@ -18,6 +18,9 @@ message(STATUS "Vimba install response: ${vimba_install_output}")
 
 # Find Vimba package (using FindVimba.cmake)
 find_package(Vimba)
+if (NOT VIMBA_FOUND)
+  message(FATAL_ERROR "Required package Vimba not found")
+endif()
 
 include_directories(
     ${catkin_INCLUDE_DIRS}
