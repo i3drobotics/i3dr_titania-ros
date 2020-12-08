@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!--XML-->
+<launch>
+    <!-- SETUP ARGUMENTS -->
+    <!-- algorithm 0: OpenCV block -->
+    <!-- algorithm 1: OpenCV SGBM -->
+    <!-- algorithm 2: I3DR SGM -->
+    <arg name="stereo_algorithm" default="0" />
+    <!-- enable/disable rviz -->
+    <arg name="rviz" default="false" />
+    <!-- enable/disable calibration -->
+    <arg name="calibrate" default="false"/>
+    <!-- enable/disbale stereo matching (3D generation) -->
+    <arg name="stereo_match" default="true"/>
+    <!-- namespace for camera -->
+    <arg name="camera_namespace" default="i3dr_titania"/>
+    <arg name="imu" default="false" /> <!-- NOT YET IMPLIMENTED -->
+    <arg name="map" default="true" />
+    <arg name="depth_max" default="100" />
+    <arg name="depth_min" default="0.1" />
+    <arg name="gui" default="false" />
+
+    <!-- mapping settings -->
+    <arg name="cropByDisp" default="false" />
+    <arg name="clearMapOnStart" default="true" />
+    <arg name="database_path" default="~/.ros/rtabmap.db" />
+    <arg name="localization" default="false" /> <!-- true: map, false: localise -->
+
+    <!-- Use full res camera model mesh (slower) -->
+    <arg name="camera_mesh" default="false" />
+
+    <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
+    
+    <!-- SETUP ROBOT MODEL -->
+    <param name="$(arg camera_namespace)_robot_description" command="$(find xacro)/xacro '$(find i3dr_titania)/urdf/titania_scene.urdf.xacro' en_imu:=$(arg imu) camera_name:=$(arg urdf_namespace) en_mesh:=$(arg camera_mesh)" />
+    <node name="robot_state_publisher_$(arg camera_namespace)" pkg="robot_state_publisher" type="state_publisher">
+        <remap from="robot_description" to="$(arg camera_namespace)_robot_description"/>
+    </node>
+
+    <!-- STEREO CALIBRATION -->
+    <include if="$(arg calibrate)" file="$(find i3dr_stereo_camera)/launch/stereo_calibration.launch">
+        <arg name="split_laser" value="$(arg split_laser)"/>
+        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+        <arg name="multi_board" value="false" />
+        <arg name="grid_rows" value="8" />
+    </include>
+
+    <!-- STEREO MATCHER -->
+    <include if="$(arg stereo_match)" file="$(find i3dr_stereo_camera)/launch/stereo_matcher.launch">
+
+        <!-- Matcher Parameters -->
+        <!-- see link below for details on matcher parameters -->
+        <!-- http://wiki.ros.org/stereo_image_proc/Tutorials/ChoosingGoodStereoParameters -->
+        <!-- algorithm 0: OpenCV block -->
+        <!-- algorithm 1: OpenCV SGBM -->
+        <!-- algorithm 2: I3DR SGM -->
+        <arg name="stereo_algorithm" value="$(arg stereo_algorithm)" />
+
+        <!-- maximum depth value (m) -->
+        <arg name="depth_max" value="$(arg depth_max)" />
+        <!-- TODO fix issue with i3dr alg giving extra 3D close to the camera -->
+        <arg name="depth_min" value="$(arg depth_min)" />
+
+        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+        <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
+
+        <arg if="$(eval stereo_algorithm == 0)" name="min_disparity" value="0" />
+        <arg if="$(eval stereo_algorithm == 0)" name="disparity_range" value="512" />
+        <arg if="$(eval stereo_algorithm == 1)" name="min_disparity" value="0" />
+        <arg if="$(eval stereo_algorithm == 1)" name="disparity_range" value="512" />
+        <arg if="$(eval stereo_algorithm == 2)" name="correlation_window_size" value="10" />
+        <arg if="$(eval stereo_algorithm == 2)" name="min_disparity" value="0" />
+        <arg if="$(eval stereo_algorithm == 2)" name="disparity_range" value="280" />
+        <arg if="$(eval stereo_algorithm == 2)" name="speckle_range" value="5" />
+        <arg if="$(eval stereo_algorithm == 2)" name="speckle_size" value="1000" />
+        <arg if="$(eval stereo_algorithm == 2)" name="interp" value="false"/>
+    </include>
+
+    <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_disp_cropped"/>
+    <arg unless="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect"/>
+
+    <group if="$(arg map)">
+        <arg name="map_frame_id" default="scan" />
+        <arg name="map_resolution" default="0.01"/>
+        <include if="$(arg map)" file="$(find i3dr_rtabmap)/launch/standalone_rtabmap.launch">
+            <arg name="rgb_topic" value="$(arg rgb_topic)"/>
+            <arg name="camera_en" value="false"/>
+            <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+            <!--<arg name="camera_model" value="$(arg camera_model)"/> TODO find out where this is used-->
+            <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
+            <arg name="rviz" value="$(arg rviz)" />
+            <arg name="map_frame_id" value="$(arg map_frame_id)"/>
+            <arg name="grid_size" value="$(arg map_resolution)" />
+            <arg name="imu" value="$(arg imu)" />
+            <arg name="gftt_min_dist" value="10"/>
+            <arg name="max_depth" value="$(arg depth_max)"/>
+            <arg name="use_compressed" value="false"/>
+            <arg name="clearMapOnStart" value="$(arg clearMapOnStart)"/>
+            <arg name="database_path" value="$(arg database_path)" />
+            <arg name="localization" value="$(arg localization)"/>
+        </include>
+    </group>
+    <group unless="$(arg map)">
+        <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(arg camera_namespace)_processing_rivz" 
+            args="-d $(find i3dr_titania)/rviz/titania.rviz"/>
+    </group>
+
+    <node if="$(arg gui)" pkg="i3dr_stereo_camera" type="stereo_gui" name="$(anon stereo_gui)" ns="$(arg camera_namespace)" output="screen"/>
+
+</launch>

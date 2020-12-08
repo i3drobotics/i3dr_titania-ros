@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--XML-->
+<launch>
+    <!-- SETUP ARGUMENTS -->
+    <!-- enable/disable rviz -->
+    <arg name="rviz" default="false" />
+    <!-- namespace for camera -->
+    <arg name="camera_namespace" default="i3dr_titania"/>
+    <arg name="exposure" default="40000"/>
+    <arg name="binning" default="1" />
+
+    <!-- Use full res camera model mesh (slower) -->
+    <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
+    <arg name="gui" default="false" />
+
+    <arg name="imu" default="false" /> <!-- NOT YET IMPLIMENTED -->
+    
+    <!-- camera calibration files -->
+    <arg name="calibration_folder" default="001" />
+    <arg name="cameraLeft_info_url"  default="file://$(find i3dr_titania)/calibration/$(arg calibration_folder)/left.yaml" />
+    <arg name="cameraRight_info_url" default="file://$(find i3dr_titania)/calibration/$(arg calibration_folder)/right.yaml" />
+    
+    <arg name="camera_left_device_user_id" default="i3dr_titania_l"/>
+    <arg name="camera_right_device_user_id" default="i3dr_titania_r"/>
+    
+    <!-- STEREO CAPTURE -->
+    <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
+        <!-- camera startup settings -->
+        <arg name="exposure" value="$(eval arg('exposure')/arg('binning'))"/>
+        <arg name="gain" value="10"/>
+        <arg name="fps" value="15"/> <!-- if using hardware trigger MUST be higher than external trigger fps-->
+        <arg name="hardware_trigger" value="true"/>
+        <!-- camera calibration files-->
+        <arg name="camera_info_right" value="$(arg cameraRight_info_url)" />
+        <arg name="camera_info_left" value="$(arg cameraLeft_info_url)" />
+        <!-- frame id -->
+        <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
+
+        <!-- 0=TIS, 1=Basler -->
+        <arg name="camera_type" value="1"/>
+        <arg name="binning" value="$(arg binning)"/>
+        <!-- camera is mounted upside down so flip the image -->
+        <arg name="reverse_x" value="true"/>
+        <arg name="reverse_y" value="true"/>
+
+        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+        <arg name="camera_right_serial" value="$(arg camera_left_device_user_id)"/>
+        <arg name="camera_left_serial" value="$(arg camera_right_device_user_id)"/>
+    </include>
+
+    <!-- TODO read IMU from device -->
+
+    <!-- run rviz with config file -->
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(arg camera_namespace)_capture_rviz" 
+        args="-d $(find i3dr_titania)/rviz/titania.rviz"/>
+
+    <node if="$(arg gui)" pkg="i3dr_stereo_camera" type="stereo_gui" name="$(anon stereo_gui)" ns="$(arg camera_namespace)" output="screen"/>
+
+</launch>

@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!--XML-->
 <launch>
+    <!-- Test single camera capture functionality using Basler's Pylon API -->
 
+    <!-- SETUP PARAMETERS -->
     <arg name="camera_serial" default="titania_left"/>
     <arg name="frame_id" default="leftCamera"/>
     <arg name="camera_info_url"  default="file://$(find i3dr_titania)/calibration/left.yaml" />
