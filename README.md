@@ -27,6 +27,17 @@ git clone https://github.com/i3drobotics/camera_control_msgs.git
 git clone https://github.com/i3drobotics/pylon_camera.git
 ```
 
+The pylon_camera package used by this package requires the pylonSDK to be installed on your system. Please download and install the pylon debian package for your architecture from [here](https://www.baslerweb.com/en/sales-support/downloads/software-downloads/#type=pylonsoftware;language=all;version=all;os=all)  
+Look for 'pylon 6.x.x Camera Software Suite Linux x86 (64 Bit) - Debian Installer Package'
+
+In order to build the package, you need to configure rosdep (i.e. the ROS command-line tool for checking and installing system dependencies for ROS packages) such that
+it knows how to resolve this dependency. This can be achieved by executing the following commands:
+
+```
+sudo sh -c 'echo "yaml https://raw.githubusercontent.com/i3drobotics/pylon_camera/master/rosdep/pylon_sdk.yaml " > /etc/ros/rosdep/sources.list.d/15-plyon_camera.list'
+rosdep update
+```
+
 To install package dependences use rodep:
 ```
 rosdep install --from-paths src --ignore-src -r -y

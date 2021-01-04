@@ -6,11 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1
-        - /RobotModel1
-        - /Left1
-        - /Right1
       Splitter Ratio: 0.5
-    Tree Height: 484
+    Tree Height: 360
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -29,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Left
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -57,34 +54,34 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
         i3dr_titania_base_link:
-          Value: true
+          Value: false
         i3dr_titania_cameraLeft:
           Value: true
         i3dr_titania_cameraLeft_optical:
-          Value: true
+          Value: false
         i3dr_titania_cameraRight:
           Value: true
         i3dr_titania_cameraRight_optical:
-          Value: true
+          Value: false
         i3dr_titania_center:
-          Value: true
+          Value: false
         i3dr_titania_depth_optical_frame:
-          Value: true
+          Value: false
         i3dr_titania_mount_base_link:
-          Value: true
+          Value: false
         i3dr_titania_mount_point_1:
-          Value: true
+          Value: false
         i3dr_titania_mount_point_2:
-          Value: true
+          Value: false
         i3dr_titania_probe_mount:
-          Value: true
+          Value: false
       Marker Scale: 0.300000012
       Name: TF
       Show Arrows: true
       Show Axes: true
-      Show Names: true
+      Show Names: false
       Tree:
         i3dr_titania_base_link:
           i3dr_titania_mount_base_link:
@@ -167,7 +164,7 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_titania/left/image_raw
+      Image Topic: /i3dr_titania/left/image_rect
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -179,7 +176,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_titania/right/image_raw
+      Image Topic: /i3dr_titania/right/image_rect
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -188,6 +185,48 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /i3dr_titania/depth
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Depth
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Flat Squares
+      Topic: /i3dr_titania/points2
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
   Enabled: true
   Global Options:
@@ -214,35 +253,37 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.349079698
+      Distance: 0.619134426
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.00846494734
-        Y: -0.0760111585
-        Z: 0.0268256143
+        X: 0.00328684784
+        Y: -0.0109422654
+        Z: -0.0178929679
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.345397979
+      Pitch: 0.495396972
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.47540522
+      Yaw: 1.36858249
     Saved: ~
 Window Geometry:
+  Depth:
+    collapsed: false
   Displays:
     collapsed: false
-  Height: 1056
+  Height: 1028
   Hide Left Dock: false
   Hide Right Dock: false
   Left:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000019a00000273fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000014b00000273000000d700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002e7fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000d7000002e7000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b20000000000000000000000020000073f0000011dfc0100000003fb00000008004c0065006600740100000000000003930000004e00fffffffb0000000a005200690067006800740100000399000003a60000005700fffffffb0000000a00560069006500770073030000004e00000080000002e100000197000000030000073f0000003efc0100000002fb0000000800540069006d006501000000000000073f0000030000fffffffb0000000800540069006d006501000000000000045000000000000000000000059f0000027300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000019a000001fdfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006300fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000019f000001fd000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002e7fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000d7000002e7000000b700fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000002000003a00000016afc0100000004fb00000008004c0065006600740100000000000001c90000005600fffffffb0000000a004400650070007400680000000168000000cb0000006700fffffffb0000000a0052006900670068007401000001d0000001d00000006000fffffffb0000000a00560069006500770073030000004e00000080000002e10000019700000003000003a000000040fc0100000002fb0000000800540069006d00650100000000000003a00000038300fffffffb0000000800540069006d00650100000000000004500000000000000000000001ff000001fd00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Right:
     collapsed: false
   Selection:
@@ -253,6 +294,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1855
+  Width: 928
   X: 65
-  Y: 205
+  Y: 24

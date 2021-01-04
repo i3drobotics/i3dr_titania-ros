@@ -12,6 +12,8 @@
     <arg name="calibrate" default="false"/>
     <!-- enable/disbale stereo matching (3D generation) -->
     <arg name="stereo_match" default="true"/>
+    <!-- simulate camera with gazebo -->
+    <arg name="sim" default="false"/>
     <!-- namespace for camera -->
     <arg name="camera_namespace" default="i3dr_titania"/>
     <arg name="imu" default="false" /> <!-- NOT YET IMPLIMENTED -->
@@ -41,18 +43,31 @@
     <arg name="camera_left_device_user_id" default="i3dr_$(arg camera_namespace)_l"/>
     <arg name="camera_right_device_user_id" default="i3dr_$(arg camera_namespace)_r"/>
 
-    <include file="$(find i3dr_titania)/launch/titania_capture.launch">
-        <arg name="exposure" value="$(arg exposure)"/>
-        <arg name="rviz" value="false" />
-        <arg name="imu" value="$(arg imu)" />
-        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
-        <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
-        <arg name="cameraLeft_info_url"  value="$(arg cameraLeft_info_url)" />
-        <arg name="cameraRight_info_url" value="$(arg cameraRight_info_url)" />
-        <arg name="camera_left_device_user_id" value="$(arg camera_left_device_user_id)"/>
-        <arg name="camera_right_device_user_id" value="$(arg camera_right_device_user_id)"/>
-        <arg name="gui" value="false"/>
-    </include>
+    <group if="$(arg sim)">
+        <!-- Simulate camera capture with gazebo -->
+        <include file="$(find i3dr_titania)/launch/titania_sim.launch">
+            <arg name="imu" value="$(arg imu)" />
+            <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+            <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
+            <arg name="new_gazebo_world" value="true"/> <!-- should be false if using in your own gazebo world -->
+        </include>
+    </group>
+    <group unless="$(arg sim)">
+        <!-- Start image capture from camera -->
+        <include file="$(find i3dr_titania)/launch/titania_capture.launch">
+            <arg name="exposure" value="$(arg exposure)"/>
+            <arg name="rviz" value="false" />
+            <arg name="imu" value="$(arg imu)" />
+            <arg name="camera_mesh" value="$(arg camera_mesh)" />
+            <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+            <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
+            <arg name="cameraLeft_info_url"  value="$(arg cameraLeft_info_url)" />
+            <arg name="cameraRight_info_url" value="$(arg cameraRight_info_url)" />
+            <arg name="camera_left_device_user_id" value="$(arg camera_left_device_user_id)"/>
+            <arg name="camera_right_device_user_id" value="$(arg camera_right_device_user_id)"/>
+            <arg name="gui" value="false"/>
+        </include>
+    </group>
 
     <include file="$(find i3dr_titania)/launch/titania_processing.launch">
         <arg name="stereo_algorithm" value="$(arg stereo_algorithm)" />
@@ -61,7 +76,6 @@
         <arg name="imu" value="$(arg imu)" />
         <arg name="calibrate" value="$(arg calibrate)" />
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
-        <arg name="camera_mesh" value="$(arg camera_mesh)" />
         <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
         <arg name="map" value="$(arg map)" />
         <arg name="depth_max" value="$(arg depth_max)" />
