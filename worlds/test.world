@@ -76,7 +76,7 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/WoodFloor</name>
+              <name>Gazebo/CeilingTiled</name>
             </script>
           </material>
         </visual>

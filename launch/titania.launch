@@ -47,6 +47,7 @@
         <!-- Simulate camera capture with gazebo -->
         <include file="$(find i3dr_titania)/launch/titania_sim.launch">
             <arg name="imu" value="$(arg imu)" />
+            <arg name="camera_mesh" value="$(arg camera_mesh)" />
             <arg name="camera_namespace" value="$(arg camera_namespace)"/>
             <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
             <arg name="new_gazebo_world" value="true"/> <!-- should be false if using in your own gazebo world -->

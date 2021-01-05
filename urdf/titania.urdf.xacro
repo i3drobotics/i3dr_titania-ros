@@ -7,23 +7,23 @@ Edited: 2019, Marti Morta Garriga, Wood.
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:macro name="titania_camera" params="camera_name:=titania en_mesh:=false en_imu:=false">
 
-    <xacro:property name="height" value="0.038"/>
-    <xacro:property name="width" value="0.10175"/>
-    <xacro:property name="length" value="0.03242"/>
+    <xacro:property name="height" value="0.059"/>
+    <xacro:property name="width" value="0.126"/>
+    <xacro:property name="length" value="0.0655"/>
+    <xacro:property name="baseline" value="0.09"/>
+    <xacro:property name="img_w" value="1600"/>
+    <xacro:property name="img_h" value="1600"/>
     <xacro:property name="mesh_file" value="package://i3dr_titania/mesh/titania.stl"/>
-    <xacro:property name="mesh_offset_xyz" value="-0.008 0.002 0"/>
-    <xacro:property name="mesh_offset_rpy" value="${pi/2} 0 ${pi/2}"/>
+    <xacro:property name="mesh_offset_xyz" value="0 0 -0.07"/>
+    <xacro:property name="mesh_offset_rpy" value="0 0 -${pi/2}"/>
     <xacro:property name="box_offset_xyz" value="0 0 0"/>
     <xacro:property name="box_offset_rpy" value="0 0 0"/>
-    <xacro:property name="fov_rad" value="${62.8 * pi/180.0}"/>
-    <xacro:property name="sim_w" value="752"/>
-    <xacro:property name="sim_h" value="480"/>
-    <xacro:property name="sim_rate" value="1"/>
-    <xacro:property name="sim3d_w" value="752"/>
-    <xacro:property name="sim3d_h" value="480"/>
-    <xacro:property name="sim3d_rate" value="0.1"/>
+    <xacro:property name="fov_rad" value="${57.8 * pi/180.0}"/>
+    <xacro:property name="sim_w" value="${img_w/2}"/>
+    <xacro:property name="sim_h" value="${img_h/2}"/>
+    <xacro:property name="sim_rate" value="5"/>
 
-    <material name="black">
+    <material name="darkgrey">
         <color rgba= "0.1 0.1 0.1 1.0"/>
     </material>
 
@@ -77,9 +77,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
                     <box size="${length} ${width} ${height}"/>
                 </xacro:if>
             </geometry>
-            <xacro:if value="${(en_mesh == 'false')}">
-                <material name="black"/>
-            </xacro:if>
+            <material name="darkgrey"/>
         </visual>
     </link>
 
@@ -106,13 +104,13 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <joint name="${camera_name}_right_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
         <child link="${camera_name}_cameraRight"/>
-        <origin xyz="0 ${-0.06/2}  0" rpy="0 0 0" />
+        <origin xyz="0 ${-baseline/2}  0" rpy="0 0 0" />
     </joint>
 
     <joint name="${camera_name}_left_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
         <child link="${camera_name}_cameraLeft"/>
-        <origin xyz="0 ${0.06/2}  0" rpy="0 0 0" />
+        <origin xyz="0 ${baseline/2}  0" rpy="0 0 0" />
     </joint>
 
     <joint name="${camera_name}_left_optical_joint" type="fixed">
@@ -158,29 +156,55 @@ Edited: 2019, Marti Morta Garriga, Wood.
         <origin xyz="${(-0.03/2)-0.002} -0.007 ${-0.038/2}" rpy="0 0 0" />
     </joint>
 
-    <xacro:macro name="optical_camera" params="name fov_rad:=^ sim_w:=^ sim_h:=^">
+    <xacro:macro name="optical_camera" params="name offset fov_rad:=^ sim_w:=^ sim_h:=^">
         <camera name="${name}">
-          <horizontal_fov>${fov_rad}</horizontal_fov>
-          <image>
-              <width>${sim_w}</width> <!-- real: 752 -->
-              <height>${sim_h}</height> <!-- real 480 -->
-              <!-- <format>L8</format> -->
-              <format>B8G8R8</format>
-          </image>
-          <clip>
-              <near>0.02</near>
-              <far>300</far>
-          </clip>
-          <noise>
-              <type>gaussian</type>
-              <mean>0.0</mean>
-              <stddev>0.007</stddev>
-          </noise>
+            <pose>0 ${offset} 0 0 0 0</pose>
+            <horizontal_fov>${fov_rad}</horizontal_fov>
+            <image>
+                <width>${sim_w}</width>
+                <height>${sim_h}</height>
+                <format>B8G8R8</format>
+            </image>
+            <clip>
+                <near>0.02</near>
+                <far>300</far>
+            </clip>
+            <noise>
+                <type>gaussian</type>
+                <mean>0.0</mean>
+                <stddev>0.007</stddev>
+            </noise>
       </camera>
     </xacro:macro>
     <gazebo reference="${camera_name}_cameraLeft">
-      <sensor type="camera" name="camera_left">
+      <sensor type="multicamera" name="stereo_camera">
         <update_rate>${sim_rate}</update_rate> <!-- reality 60fps on USB3-->
+        <optical_camera name="left" offset="0" />
+        <optical_camera name="right" offset="${-baseline}" />
+        <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>${sim_rate}</updateRate>
+          <cameraName>${camera_name}</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>${camera_name}_cameraLeft_optical</frameName>
+          <!--<rightFrameName>${camera_name}_cameraRight_optical</rightFrameName>-->
+          <hackBaseline>${baseline}</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+
+
+
+    <!--<gazebo reference="${camera_name}_cameraLeft">
+      <sensor type="camera" name="camera_left">
+        <update_rate>${sim_rate}</update_rate>
         <optical_camera name="left" />
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
@@ -194,7 +218,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     </gazebo>
     <gazebo reference="${camera_name}_cameraRight">
       <sensor type="camera" name="camera_right">
-        <update_rate>${sim_rate}</update_rate> <!-- reality 60fps on USB3-->
+        <update_rate>${sim_rate}</update_rate>
         <optical_camera name="right" />
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <alwaysOn>true</alwaysOn>
@@ -206,8 +230,10 @@ Edited: 2019, Marti Morta Garriga, Wood.
         </plugin>
       </sensor>
     </gazebo>
+    -->
+
     <gazebo reference="${camera_name}_center">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/DarkGrey</material>
     </gazebo>
 
   </xacro:macro>
