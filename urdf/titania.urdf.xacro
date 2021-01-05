@@ -12,7 +12,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <xacro:property name="length" value="0.0655"/>
     <xacro:property name="baseline" value="0.09"/>
     <xacro:property name="img_w" value="1600"/>
-    <xacro:property name="img_h" value="1600"/>
+    <xacro:property name="img_h" value="1200"/>
     <xacro:property name="mesh_file" value="package://i3dr_titania/mesh/titania.stl"/>
     <xacro:property name="mesh_offset_xyz" value="0 0 -0.07"/>
     <xacro:property name="mesh_offset_rpy" value="0 0 -${pi/2}"/>
@@ -21,7 +21,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <xacro:property name="fov_rad" value="${57.8 * pi/180.0}"/>
     <xacro:property name="sim_w" value="${img_w/2}"/>
     <xacro:property name="sim_h" value="${img_h/2}"/>
-    <xacro:property name="sim_rate" value="5"/>
+    <xacro:property name="sim_rate" value="3"/>
 
     <material name="darkgrey">
         <color rgba= "0.1 0.1 0.1 1.0"/>
@@ -53,7 +53,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
         <inertial>
             <mass value="5"/>
             <origin rpy="0 0 0" xyz="0 0 0.1"/>
-            <inertia ixx="0.039" ixy="0" ixz="0" iyy="0.106" iyz="0" izz="0.0106"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
     
         <collision name="${camera_name}_center_collision">
@@ -83,12 +83,12 @@ Edited: 2019, Marti Morta Garriga, Wood.
 
     <xacro:if value="${(en_imu == 'true')}">
         <joint name="${camera_name}_imu_joint" type="fixed">
-            <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
             <parent link="${camera_name}_base_link" />
             <child link="${camera_name}_imu_link" />
         </joint>
         <joint name="${camera_name}_imu_mount_joint" type="fixed">
-            <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
             <parent link="${camera_name}_base_link" />
             <child link="${camera_name}_mount_base_link" />
         </joint>
@@ -104,13 +104,13 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <joint name="${camera_name}_right_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
         <child link="${camera_name}_cameraRight"/>
-        <origin xyz="0 ${-baseline/2}  0" rpy="0 0 0" />
+        <origin xyz="0.015 ${-baseline/2} 0" rpy="0 0 0" />
     </joint>
 
     <joint name="${camera_name}_left_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
         <child link="${camera_name}_cameraLeft"/>
-        <origin xyz="0 ${baseline/2}  0" rpy="0 0 0" />
+        <origin xyz="0.015 ${baseline/2} 0" rpy="0 0 0" />
     </joint>
 
     <joint name="${camera_name}_left_optical_joint" type="fixed">
@@ -156,6 +156,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
         <origin xyz="${(-0.03/2)-0.002} -0.007 ${-0.038/2}" rpy="0 0 0" />
     </joint>
 
+    <!-- Simulate stereo camera using gazebo -->
     <xacro:macro name="optical_camera" params="name offset fov_rad:=^ sim_w:=^ sim_h:=^">
         <camera name="${name}">
             <pose>0 ${offset} 0 0 0 0</pose>
@@ -199,40 +200,33 @@ Edited: 2019, Marti Morta Garriga, Wood.
       </sensor>
     </gazebo>
 
+    <!-- Simulate IMU using gazebo -->
+    <xacro:if value="${(en_imu == 'true')}">
+        <gazebo reference="${camera_name}_imu_link">
+            <gravity>true</gravity>
+            <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <visualize>true</visualize>
+            <topic>__default_topic__</topic>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>imu</topicName>
+                <bodyName>${camera_name}_imu_link</bodyName>
+                <updateRateHZ>10.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>${camera_name}_imu_link</frameName>
+                <initialOrientationAsReference>false</initialOrientationAsReference>
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+            </sensor>
+        </gazebo>
+    </xacro:if>
 
-
-
-    <!--<gazebo reference="${camera_name}_cameraLeft">
-      <sensor type="camera" name="camera_left">
-        <update_rate>${sim_rate}</update_rate>
-        <optical_camera name="left" />
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <alwaysOn>true</alwaysOn>
-          <updateRate>${sim_rate}</updateRate>
-          <cameraName>${camera_name}/left</cameraName>
-          <imageTopicName>image_raw</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>${camera_name}_cameraLeft_optical</frameName>
-        </plugin>
-      </sensor>
-    </gazebo>
-    <gazebo reference="${camera_name}_cameraRight">
-      <sensor type="camera" name="camera_right">
-        <update_rate>${sim_rate}</update_rate>
-        <optical_camera name="right" />
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <alwaysOn>true</alwaysOn>
-          <updateRate>${sim_rate}</updateRate>
-          <cameraName>${camera_name}/right</cameraName>
-          <imageTopicName>image_raw</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>${camera_name}_cameraRight_optical</frameName>
-        </plugin>
-      </sensor>
-    </gazebo>
-    -->
-
+    <!-- Attach material to gazebo object -->
     <gazebo reference="${camera_name}_center">
+        <gravity>0</gravity>
         <material>Gazebo/DarkGrey</material>
     </gazebo>
 
