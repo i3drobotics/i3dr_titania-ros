@@ -51,8 +51,8 @@ Edited: 2019, Marti Morta Garriga, Wood.
         <pose>0 0 0 0 0 0</pose>
 
         <inertial>
-            <mass value="5"/>
-            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <mass value="0.5"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
     
@@ -189,7 +189,6 @@ Edited: 2019, Marti Morta Garriga, Wood.
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
           <frameName>${camera_name}_cameraLeft_optical</frameName>
-          <!--<rightFrameName>${camera_name}_cameraRight_optical</rightFrameName>-->
           <hackBaseline>${baseline}</hackBaseline>
           <distortionK1>0.0</distortionK1>
           <distortionK2>0.0</distortionK2>
@@ -226,7 +225,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
 
     <!-- Attach material to gazebo object -->
     <gazebo reference="${camera_name}_center">
-        <gravity>0</gravity>
+        <gravity>true</gravity>
         <material>Gazebo/DarkGrey</material>
     </gazebo>
 

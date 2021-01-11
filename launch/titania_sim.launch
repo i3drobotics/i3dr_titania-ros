@@ -12,17 +12,15 @@
     <arg name="new_gazebo_world" default="true"/>
 
     <!-- Start new gazebo instance -->
-    <group if="$(arg new_gazebo_world)">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <!--<arg name="world_name" value="agriculture.world"/>-->
-            <arg name="world_name" value="$(find i3dr_titania)/worlds/test.world"/>
-            <arg name="paused" value="false"/>
-            <arg name="use_sim_time" value="true"/>
-            <arg name="gui" value="true"/>
-            <arg name="recording" value="false"/>
-            <arg name="debug" value="false"/>
-        </include>
-    </group>
+    <include if="$(arg new_gazebo_world)" file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!--<arg name="world_name" value="agriculture.world"/>-->
+        <arg name="world_name" value="$(find i3dr_titania)/worlds/test.world"/>
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="recording" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
 
     <!-- Spawn camera -->
     <param name="$(arg camera_namespace)_robot_description" command="$(find xacro)/xacro '$(find i3dr_titania)/urdf/titania_scene.urdf.xacro' en_imu:=$(arg imu) camera_name:=$(arg urdf_namespace) en_mesh:=$(arg camera_mesh)" />
@@ -30,6 +28,6 @@
         <remap from="robot_description" to="$(arg camera_namespace)_robot_description"/>
     </node>
     <node name="$(arg camera_namespace)_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
-        args="-urdf -param $(arg camera_namespace)_robot_description -model $(arg urdf_namespace) -x 0 -y 0 -z 1 -R 0 -P 0 -Y 0" />
+        args="-urdf -param $(arg camera_namespace)_robot_description -model $(arg urdf_namespace)" />
 
 </launch>
