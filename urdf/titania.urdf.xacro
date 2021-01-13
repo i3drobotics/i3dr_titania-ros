@@ -4,7 +4,7 @@ Copyright (c) 2018, I3D Robotics Ltd.
 Edited: 2019, Marti Morta Garriga, Wood.
 -->
 
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
     <xacro:macro name="titania_camera" params="camera_name:=titania en_mesh:=false en_imu:=false">
 
     <xacro:property name="height" value="0.059"/>
