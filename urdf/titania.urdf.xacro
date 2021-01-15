@@ -19,8 +19,8 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <xacro:property name="box_offset_xyz" value="0 0 0"/>
     <xacro:property name="box_offset_rpy" value="0 0 0"/>
     <xacro:property name="fov_rad" value="${57.8 * pi/180.0}"/>
-    <xacro:property name="sim_w" value="${img_w/2}"/>
-    <xacro:property name="sim_h" value="${img_h/2}"/>
+    <xacro:property name="sim_w" value="${img_w}/2"/>
+    <xacro:property name="sim_h" value="${img_h}/2"/>
     <xacro:property name="sim_rate" value="3"/>
 
     <material name="darkgrey">
@@ -51,7 +51,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
         <pose>0 0 0 0 0 0</pose>
 
         <inertial>
-            <mass value="0.5"/>
+            <mass value="0.2"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>

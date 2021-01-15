@@ -18,9 +18,13 @@
     <arg name="camera_namespace" default="i3dr_titania"/>
     <arg name="imu" default="false" /> <!-- ONLY IMPLIMENTED IN SIMULATION -->
     <arg name="depth_max" default="100" />
+    <arg name="depth_min" default="0.01" />
     <arg name="gui" default="false" />
 
+    <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
+
     <!-- mapping settings -->
+    <arg name="map_base_frame_id" default="$(arg urdf_namespace)_base_link)"/>
     <arg name="map" default="false" />
     <arg name="cropByDisp" default="false" />
     <arg name="clearMapOnStart" default="true" />
@@ -31,8 +35,7 @@
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
-
-    <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
+    
     <arg name="new_gazebo_world" default="true"/>
     <arg name="real" default="$(eval sim == 0)"/>
     
@@ -82,9 +85,10 @@
         <arg name="calibrate" value="$(arg calibrate)" />
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
         <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
+        <arg name="map_base_frame_id" value="$(arg map_base_frame_id)"/>
         <arg name="map" value="$(arg map)" />
         <arg name="depth_max" value="$(arg depth_max)" />
-        <arg name="depth_min" value="0.5" />
+        <arg name="depth_min" value="$(arg depth_min)" />
         <arg name="gui" value="$(arg gui)"/>
         <arg name="clearMapOnStart" value="$(arg clearMapOnStart)"/>
         <arg name="database_path" value="$(arg database_path)" />
