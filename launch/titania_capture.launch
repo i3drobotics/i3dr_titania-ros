@@ -38,9 +38,11 @@
         <!-- 0=TIS, 1=Basler -->
         <arg name="camera_type" value="1"/>
         <arg name="binning" value="$(arg binning)"/>
-        <!-- camera is mounted upside down so flip the image -->
-        <arg name="reverse_x" value="true"/>
-        <arg name="reverse_y" value="true"/>
+        <!-- left camera is mounted upside down so flip the image -->
+        <arg name="reverse_x_l" value="false"/>
+        <arg name="reverse_y_l" value="false"/>
+        <arg name="reverse_x_r" value="true"/>
+        <arg name="reverse_y_r" value="true"/>
 
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
         <arg name="camera_right_serial" value="$(arg camera_left_device_user_id)"/>

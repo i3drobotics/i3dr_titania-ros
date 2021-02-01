@@ -31,7 +31,7 @@
     <arg name="database_path" default="~/.ros/rtabmap.db" />
     <arg name="localization" default="false" /> <!-- true: map, false: localise -->
 
-    <arg name="exposure" default="500"/>
+    <arg name="exposure" default="20000"/>
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -45,8 +45,8 @@
     <arg name="cameraRight_info_url" default="file://$(find i3dr_titania)/calibration/$(arg calibration_folder)/right.yaml" />
 
     <!-- Be sure to change this to your cameras id -->
-    <arg name="camera_left_device_user_id" default="i3dr_$(arg camera_namespace)_l"/>
-    <arg name="camera_right_device_user_id" default="i3dr_$(arg camera_namespace)_r"/>
+    <arg name="camera_left_device_user_id" default="i3dr_titania_l"/> <!-- 40081086 / i3dr_titania_l -->
+    <arg name="camera_right_device_user_id" default="i3dr_titania_r"/>  <!-- 40081087 / i3dr_titania_r -->
 
     <arg name="state_publisher" default="true"/>
     <group if="$(arg state_publisher)">

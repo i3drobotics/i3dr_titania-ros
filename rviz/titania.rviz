@@ -166,7 +166,7 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_titania/left/image_rect
+      Image Topic: /i3dr_titania/left/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -178,7 +178,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_titania/right/image_rect
+      Image Topic: /i3dr_titania/right/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
