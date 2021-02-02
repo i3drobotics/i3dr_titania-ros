@@ -1,31 +1,20 @@
-%YAML:1.0
----
-image_width: 1600
+image_width: 1920
 image_height: 1200
-camera_name: rightCamera
-camera_matrix: !!opencv-matrix
-   rows: 3
-   cols: 3
-   dt: d
-   data: [ 2.3477876209559477e+03, 0., 800, 0.,
-       2.3470335015276310e+03, 600, 0., 0., 1. ]
+camera_name: i3dr_titania_r
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [1692.321801610312, 0, 937.6465968751538, 0, 1693.69949057901, 621.3830633039313, 0, 0, 1]
 distortion_model: plumb_bob
-distortion_coefficients: !!opencv-matrix
-   rows: 1
-   cols: 5
-   dt: d
-   data: [ 0, 0, 0, 0, 0 ]
-rectification_matrix: !!opencv-matrix
-   rows: 3
-   cols: 3
-   dt: d
-   data: [ 1, 0, 0,
-           0, 1, 0,
-           0, 0, 1 ]
-projection_matrix: !!opencv-matrix
-   rows: 3
-   cols: 4
-   dt: d
-   data: [ 2.3449480597082306e+03, 0., 800, 0., 0.,
-       2.3449480597082306e+03, 600, 0., 0., 0., 1.,
-       0. ]
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.4718511272761128, 0.2219663017328617, 0.0002031850603296182, -3.898299809000397e-05, 0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [0.9994752700431592, 0.0066615703193609, -0.03169870743475593, -0.006706472012141685, 0.999976652763787, -0.001310404701913762, 0.03168923800447718, 0.001522303587543343, 0.9994966106928442]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [1607.055305227266, 0, 1021.317665100098, -145.9008295380536, 0, 1607.055305227266, 619.6802444458008, 0, 0, 0, 1, 0]

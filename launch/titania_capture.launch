@@ -26,8 +26,8 @@
     <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
         <!-- camera startup settings -->
         <arg name="exposure" value="$(eval arg('exposure')/arg('binning'))"/>
-        <arg name="gain" value="10"/>
-        <arg name="fps" value="15"/> <!-- if using hardware trigger MUST be higher than external trigger fps-->
+        <arg name="gain" value="0"/>
+        <arg name="fps" value="10"/> <!-- if using hardware trigger MUST be higher than external trigger fps-->
         <arg name="hardware_trigger" value="true"/>
         <!-- camera calibration files-->
         <arg name="camera_info_right" value="$(arg cameraRight_info_url)" />
@@ -39,14 +39,14 @@
         <arg name="camera_type" value="1"/>
         <arg name="binning" value="$(arg binning)"/>
         <!-- left camera is mounted upside down so flip the image -->
-        <arg name="reverse_x_l" value="false"/>
-        <arg name="reverse_y_l" value="false"/>
-        <arg name="reverse_x_r" value="true"/>
-        <arg name="reverse_y_r" value="true"/>
+        <arg name="reverse_x_l" value="true"/>
+        <arg name="reverse_y_l" value="true"/>
+        <arg name="reverse_x_r" value="false"/>
+        <arg name="reverse_y_r" value="false"/>
 
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
-        <arg name="camera_right_serial" value="$(arg camera_left_device_user_id)"/>
-        <arg name="camera_left_serial" value="$(arg camera_right_device_user_id)"/>
+        <arg name="camera_left_serial" value="$(arg camera_left_device_user_id)"/>
+        <arg name="camera_right_serial" value="$(arg camera_right_device_user_id)"/>
     </include>
 
     <!-- TODO read IMU from device -->

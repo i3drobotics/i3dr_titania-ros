@@ -5,7 +5,7 @@
     <!-- algorithm 0: OpenCV block -->
     <!-- algorithm 1: OpenCV SGBM -->
     <!-- algorithm 2: I3DR SGM -->
-    <arg name="stereo_algorithm" default="0" />
+    <arg name="stereo_algorithm" default="2" />
     <!-- enable/disable rviz -->
     <arg name="rviz" default="false" />
     <!-- enable/disable calibration -->
