@@ -32,10 +32,12 @@
 
     <!-- STEREO CALIBRATION -->
     <include if="$(arg calibrate)" file="$(find i3dr_stereo_camera)/launch/stereo_calibration.launch">
-        <arg name="split_laser" value="$(arg split_laser)"/>
+        <arg name="split_laser" value="false"/>
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
         <arg name="multi_board" value="false" />
-        <arg name="grid_rows" value="8" />
+        <arg name="grid_rows" value="10" />
+        <arg name="grid_cols" value="6" />
+        <arg name="grid_size" value="0.036" />
     </include>
 
     <!-- STEREO MATCHER -->
