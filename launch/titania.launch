@@ -34,7 +34,7 @@
     <arg name="exposure" default="20000"/>
 
     <!-- Use full res camera model mesh (slower) -->
-    <arg name="camera_mesh" default="false" />
+    <arg name="camera_mesh" default="true" />
     
     <arg name="new_gazebo_world" default="true"/>
     <arg name="real" default="$(eval sim == 0)"/>

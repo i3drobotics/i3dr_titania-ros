@@ -23,7 +23,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <xacro:property name="sim_h" value="${img_h}"/>
     <xacro:property name="sim_rate" value="3"/>
 
-    <material name="darkgrey">
+    <material name="${camera_name}_darkgrey">
         <color rgba= "0.1 0.1 0.1 1.0"/>
     </material>
 
@@ -56,11 +56,11 @@ Edited: 2019, Marti Morta Garriga, Wood.
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
     
-        <collision name="${camera_name}_center_collision">
+        <!--<collision name="${camera_name}_center_collision">
             <geometry>
                 <box size="${length} ${width} ${height}"/>
             </geometry>
-        </collision>
+        </collision>-->
 
         <visual>
             <xacro:if value="${(en_mesh == 'true')}">
@@ -77,7 +77,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
                     <box size="${length} ${width} ${height}"/>
                 </xacro:if>
             </geometry>
-            <material name="darkgrey"/>
+            <material name="${camera_name}_darkgrey"/>
         </visual>
     </link>
 
@@ -94,7 +94,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
         </joint>
     </xacro:if>
     <xacro:if value="${(en_imu == 'false')}">
-        <joint name="${camera_name}_imu_mount_joint" type="fixed">
+        <joint name="${camera_name}_base_mount_joint" type="fixed">
             <origin xyz="0 0 0" rpy="0 0 0" />
             <parent link="${camera_name}_base_link" />
             <child link="${camera_name}_mount_base_link" />
@@ -136,7 +136,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <joint name="${camera_name}_mount_center_joint" type="fixed">
         <parent link="${camera_name}_mount_base_link"/>
         <child link="${camera_name}_center"/>
-        <origin xyz="0 0 0" rpy="0 0 ${-pi/2}" />
+        <origin xyz="0 -0.0133 0.03" rpy="0 0 ${-pi/2}" />
     </joint>
 
     <joint name="${camera_name}_probe_mount_joint" type="fixed">
@@ -148,12 +148,12 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <joint name="${camera_name}_mount_point_1_joint" type="fixed">
         <parent link="${camera_name}_mount_base_link"/>
         <child link="${camera_name}_mount_point_1"/>
-        <origin xyz="${(0.03/2)-0.002} -0.007 ${-0.038/2}" rpy="0 0 0" />
+        <origin xyz="${-0.025} -0 ${0}" rpy="0 0 0" />
     </joint>
     <joint name="${camera_name}_mount_point_2_joint" type="fixed">
         <parent link="${camera_name}_mount_base_link"/>
         <child link="${camera_name}_mount_point_2"/>
-        <origin xyz="${(-0.03/2)-0.002} -0.007 ${-0.038/2}" rpy="0 0 0" />
+        <origin xyz="${0.025} -0 ${0}" rpy="0 0 0" />
     </joint>
 
     <!-- Simulate stereo camera using gazebo -->
