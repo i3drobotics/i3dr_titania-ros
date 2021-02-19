@@ -14,7 +14,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <xacro:property name="img_w" value="1600"/>
     <xacro:property name="img_h" value="1200"/>
     <xacro:property name="mesh_file" value="package://i3dr_titania/mesh/titania.stl"/>
-    <xacro:property name="mesh_offset_xyz" value="0 0 -0.07"/>
+    <xacro:property name="mesh_offset_xyz" value="0 0 -0.072"/>
     <xacro:property name="mesh_offset_rpy" value="0 0 -${pi/2}"/>
     <xacro:property name="box_offset_xyz" value="0 0 0"/>
     <xacro:property name="box_offset_rpy" value="0 0 0"/>
@@ -136,7 +136,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <joint name="${camera_name}_mount_center_joint" type="fixed">
         <parent link="${camera_name}_mount_base_link"/>
         <child link="${camera_name}_center"/>
-        <origin xyz="0 -0.0133 0.03" rpy="0 0 ${-pi/2}" />
+        <origin xyz="0 -0.0133 0.0315" rpy="0 0 ${-pi/2}" />
     </joint>
 
     <joint name="${camera_name}_probe_mount_joint" type="fixed">
