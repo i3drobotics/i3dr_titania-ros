@@ -5,7 +5,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
 -->
 
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-    <xacro:macro name="titania_camera" params="camera_name:=titania en_mesh:=false en_imu:=false">
+    <xacro:macro name="titania_camera" params="camera_name:=titania en_mesh:=false en_imu:=false en_collision:=true">
 
     <xacro:property name="height" value="0.059"/>
     <xacro:property name="width" value="0.126"/>
@@ -55,12 +55,14 @@ Edited: 2019, Marti Morta Garriga, Wood.
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
-    
-        <!--<collision name="${camera_name}_center_collision">
-            <geometry>
-                <box size="${length} ${width} ${height}"/>
-            </geometry>
-        </collision>-->
+
+        <xacro:if value="${(en_collision == 'true')}">
+            <collision name="${camera_name}_center_collision">
+                <geometry>
+                    <box size="${length} ${width} ${height}"/>
+                </geometry>
+            </collision>
+        </xacro:if>
 
         <visual>
             <xacro:if value="${(en_mesh == 'true')}">
@@ -104,13 +106,13 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <joint name="${camera_name}_right_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
         <child link="${camera_name}_cameraRight"/>
-        <origin xyz="0.015 ${-baseline/2} 0" rpy="0 0 0" />
+        <origin xyz="0.015 ${(-baseline/2)+0.002} 0" rpy="0 0 0" />
     </joint>
 
     <joint name="${camera_name}_left_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
         <child link="${camera_name}_cameraLeft"/>
-        <origin xyz="0.015 ${baseline/2} 0" rpy="0 0 0" />
+        <origin xyz="0.015 ${(baseline/2)+0.002} 0" rpy="0 0 0" />
     </joint>
 
     <joint name="${camera_name}_left_optical_joint" type="fixed">
