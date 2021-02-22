@@ -60,7 +60,7 @@ To check everything is working add the paramter 'rviz':
 roslaunch i3dr_titania titania.launch rviz:=true
 ```
 
-# Vimba
+## Vimba (Developer only)
 Original plan was to use Vimba cameras however there is an issue with the Vimba API inside of ROS (detailed below).  
 The code that used Vimba has been left in however only very basic listing of available cameras as a ros node is provided and we will be using Basler's Pylon API going forward.
 ## Issue
