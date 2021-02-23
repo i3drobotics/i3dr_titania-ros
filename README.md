@@ -1,6 +1,5 @@
 # i3dr_titania-ros
 ROS driver for Titania stereo camera system from Industrial 3D Robotics.  
-**WARNING: THIS PACKAGE IS IN ACTIVE DEVELOPMENT AND NOT CURRENTLY READY FOR USE**
 
 ## Status
 ![ROS Build](https://github.com/i3drobotics/i3dr_titania-ros/workflows/ROS%20Build/badge.svg?event=push)
