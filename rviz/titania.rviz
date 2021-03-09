@@ -61,25 +61,25 @@ Visualization Manager:
         i3dr_titania_base_link:
           Value: true
         i3dr_titania_cameraLeft:
-          Value: false
+          Value: true
         i3dr_titania_cameraLeft_optical:
-          Value: false
+          Value: true
         i3dr_titania_cameraRight:
-          Value: false
+          Value: true
         i3dr_titania_cameraRight_optical:
-          Value: false
+          Value: true
         i3dr_titania_center:
-          Value: false
+          Value: true
         i3dr_titania_depth_optical_frame:
-          Value: false
+          Value: true
         i3dr_titania_mount_base_link:
-          Value: false
+          Value: true
         i3dr_titania_mount_point_1:
-          Value: false
+          Value: true
         i3dr_titania_mount_point_2:
-          Value: false
+          Value: true
         i3dr_titania_probe_mount:
-          Value: false
+          Value: true
       Marker Scale: 0.300000012
       Name: TF
       Show Arrows: true
@@ -256,25 +256,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.182352871
+      Distance: 1.6509726
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.00131850713
-        Y: 0.0114000505
-        Z: 0.00926788989
+        X: 0.0145825008
+        Y: 0.00670951605
+        Z: 0.385331064
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: -1.33479786
+      Pitch: 0.335201949
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.7294302
+      Yaw: 1.09625161
     Saved: ~
 Window Geometry:
   Depth:

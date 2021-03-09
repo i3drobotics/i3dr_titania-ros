@@ -25,7 +25,7 @@
     <!-- Expects the following topics in the bag: -->
     <!-- i3dr_titania/left/camera_info, i3dr_titania/left/image_raw, -->
     <!-- i3dr_titania/right/camera_info, i3dr_titania/right/image_raw -->
-    <arg name="bag_file" default="~/stereo-images.bag" />
+    <arg name="bag_file" default="/home/bknight/stereo_matching.bag" />
     <arg name="camera_from_bag" default="false" />
 
     <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
@@ -44,12 +44,16 @@
     <arg name="camera_mesh" default="true" />
     
     <arg name="new_gazebo_world" default="true"/>
-    <arg name="real" default="$(eval sim == 0)"/>
+    <arg name="real" default="$(eval sim == 0 )"/>
     
     <!-- camera calibration files -->
     <arg name="calibration_folder" default="$(find i3dr_titania)/calibration/001" />
-    <arg name="cameraLeft_info_url"  default="file://$(arg calibration_folder)/left.yaml" />
-    <arg name="cameraRight_info_url" default="file://$(arg calibration_folder)/right.yaml" />
+
+    <arg unless="$(arg camera_from_bag)" name="cameraLeft_info_url" default="file://$(arg calibration_folder)/left.yaml" />
+    <arg unless="$(arg camera_from_bag)" name="cameraRight_info_url" default="file://$(arg calibration_folder)/right.yaml" />
+
+    <arg if="$(arg camera_from_bag)" name="cameraLeft_info_url" default="$(arg calibration_folder)/left.yaml" />
+    <arg if="$(arg camera_from_bag)" name="cameraRight_info_url" default="$(arg calibration_folder)/right.yaml" />
 
     <!-- Be sure to change this to your cameras id -->
     <arg name="camera_left_device_user_id" default="i3dr_titania_l"/> <!-- 40081086 / i3dr_titania_l -->
@@ -84,6 +88,7 @@
             <remap from="/image_raw" to="$(arg camera_namespace)/right/image_raw"/>
             <remap from="/camera_info" to="$(arg camera_namespace)/right/camera_info"/>
         </node>
+        
     </group>
     <!-- Start image capture from camera -->
     <include if="$(arg real)" file="$(find i3dr_titania)/launch/titania_capture.launch">
