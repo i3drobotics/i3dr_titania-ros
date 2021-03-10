@@ -60,9 +60,9 @@
         <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
 
         <arg if="$(eval stereo_algorithm == 0)" name="min_disparity" value="0" />
-        <arg if="$(eval stereo_algorithm == 0)" name="disparity_range" value="256" />
+        <arg if="$(eval stereo_algorithm == 0)" name="disparity_range" value="512" />
         <arg if="$(eval stereo_algorithm == 1)" name="min_disparity" value="0" />
-        <arg if="$(eval stereo_algorithm == 1)" name="disparity_range" value="144" />
+        <arg if="$(eval stereo_algorithm == 1)" name="disparity_range" value="512" />
         <arg if="$(eval stereo_algorithm == 2)" name="correlation_window_size" value="10" />
         <arg if="$(eval stereo_algorithm == 2)" name="min_disparity" value="0" />
         <arg if="$(eval stereo_algorithm == 2)" name="disparity_range" value="280" />
