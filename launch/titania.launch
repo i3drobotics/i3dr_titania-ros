@@ -76,7 +76,7 @@
     </include>
     <group if="$(arg camera_from_bag)">
         <!-- Load images from rosbag -->
-        <node pkg="rosbag" type="play" name="$(arg camera_namespace)_rosbag_play" output="screen" args="--quiet --clock --loop $(arg bag_file) --topics /i3dr_titania/left/image_raw /i3dr_titania/right/image_raw"/>
+        <node pkg="rosbag" type="play" name="$(arg camera_namespace)_rosbag_play" output="screen" args="--quiet --clock --loop $(arg bag_file) --topics /i3dr_titania/left/image_raw /i3dr_titania/right/image_raw /tf /tf_static"/>
         <!-- Publish CameraInfo from yaml calibration files -->
         <node pkg="i3dr_stereo_camera" type="yaml2CameraInfo.py" name="$(arg camera_namespace)_loadcal_l" output="screen">
             <param name="camera_info_url" value="$(arg cameraLeft_info_url)"/>
