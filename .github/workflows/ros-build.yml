@@ -21,6 +21,7 @@ jobs:
       # as this is where apt-get installs python packages.
       PYTHONPATH: $PYTHONPATH:/usr/lib/python2.7/dist-packages:/usr/local/lib/python2.7/dist-packages
       ROS_DISTRO: ${{ matrix.rosdistro }}
+      PYLON_ROOT: /opt/pylon
     steps:
       - uses: actions/checkout@v2
       - name: Install Pylon
