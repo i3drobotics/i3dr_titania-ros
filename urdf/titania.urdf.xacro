@@ -182,8 +182,8 @@ Edited: 2019, Marti Morta Garriga, Wood.
     <gazebo reference="${camera_name}_cameraLeft">
       <sensor type="multicamera" name="stereo_camera">
         <update_rate>${sim_rate}</update_rate> <!-- reality 60fps on USB3-->
-        <optical_camera name="left" offset="0" />
-        <optical_camera name="right" offset="${-baseline}" />
+        <xacro:optical_camera name="left" offset="0" />
+        <xacro:optical_camera name="right" offset="${-baseline}" />
         <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>${sim_rate}</updateRate>
