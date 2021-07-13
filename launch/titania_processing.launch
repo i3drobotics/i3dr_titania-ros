@@ -8,6 +8,8 @@
     <arg name="stereo_algorithm" default="0" />
     <!-- enable/disable rviz -->
     <arg name="rviz" default="false" />
+    <!-- enable/disable interpolation -->
+    <arg name="interp" default="false" />
     <!-- enable/disable calibration -->
     <arg name="calibrate" default="false"/>
     <!-- enable/disbale stereo matching (3D generation) -->
@@ -70,7 +72,7 @@
         <arg if="$(eval stereo_algorithm == 2)" name="disparity_range" value="280" />
         <arg if="$(eval stereo_algorithm == 2)" name="speckle_range" value="5" />
         <arg if="$(eval stereo_algorithm == 2)" name="speckle_size" value="1000" />
-        <arg if="$(eval stereo_algorithm == 2)" name="interp" value="false"/>
+        <arg if="$(eval stereo_algorithm == 2)" name="interp" value="$(arg interp)"/>
     </include>
 
     <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_disp_cropped"/>

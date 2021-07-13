@@ -6,6 +6,8 @@
     <!-- algorithm 1: OpenCV SGBM -->
     <!-- algorithm 2: I3DR SGM -->
     <arg name="stereo_algorithm" default="0" />
+    <!-- enable/disable stereo matcher interpolation (I3DRSGM only) -->
+    <arg name="interp" default="false" />
     <!-- enable/disable rviz -->
     <arg name="rviz" default="false" />
     <!-- enable/disable calibration -->
@@ -107,6 +109,7 @@
     <include file="$(find i3dr_titania)/launch/titania_processing.launch">
         <arg name="stereo_algorithm" value="$(arg stereo_algorithm)" />
         <arg name="stereo_match" value="$(arg stereo_match)"/>
+        <arg name="interp" value="$(arg interp)"/>
         <arg name="rviz" value="$(arg rviz)" />
         <arg name="imu" value="$(arg imu)" />
         <arg name="calibrate" value="$(arg calibrate)" />
