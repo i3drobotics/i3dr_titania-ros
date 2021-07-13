@@ -12,5 +12,5 @@ Copyright (c) 2019, I3D Robotics Ltd.
     <xacro:arg name="en_collision" default="true"/>
 
     <xacro:include filename="$(find i3dr_titania)/urdf/titania.urdf.xacro" />
-    <xacro:titania_camera camera_name="$(arg camera_name)" en_collision="$(arg en_collision)" en_mesh="$(arg en_mesh)" en_imu="$(arg en_imu)"/>
+    <xacro:titania_camera camera_name="$(arg camera_name)" en_mesh="$(arg en_mesh)" en_imu="$(arg en_imu)" en_collision="$(arg en_collision)"/>
 </robot>

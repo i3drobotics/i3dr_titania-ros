@@ -56,7 +56,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
 
-        <xacro:if value="${(en_collision == 'true')}">
+        <xacro:if value="${en_collision}">
             <collision name="${camera_name}_center_collision">
                 <geometry>
                     <box size="${length} ${width} ${height}"/>
@@ -65,25 +65,25 @@ Edited: 2019, Marti Morta Garriga, Wood.
         </xacro:if>
 
         <visual>
-            <xacro:if value="${(en_mesh == 'true')}">
+            <xacro:if value="${en_mesh}">
                 <origin xyz="${mesh_offset_xyz}" rpy="${mesh_offset_rpy}"/>
             </xacro:if>
-            <xacro:if value="${(en_mesh == 'false')}">
+            <xacro:unless value="${en_mesh}">
                 <origin xyz="${box_offset_xyz}" rpy="${box_offset_rpy}"/>
-            </xacro:if>
+            </xacro:unless>
             <geometry>
-                <xacro:if value="${(en_mesh == 'true')}">
+                <xacro:if value="${en_mesh}">
                     <mesh filename="${mesh_file}"/>
                 </xacro:if>
-                <xacro:if value="${(en_mesh == 'false')}">
+                <xacro:unless value="${en_mesh}">
                     <box size="${length} ${width} ${height}"/>
-                </xacro:if>
+                </xacro:unless>
             </geometry>
             <material name="${camera_name}_darkgrey"/>
         </visual>
     </link>
 
-    <xacro:if value="${(en_imu == 'true')}">
+    <xacro:if value="${en_imu}">
         <joint name="${camera_name}_imu_joint" type="fixed">
             <origin xyz="0 0 0" rpy="0 0 0" />
             <parent link="${camera_name}_base_link" />
@@ -95,13 +95,13 @@ Edited: 2019, Marti Morta Garriga, Wood.
             <child link="${camera_name}_mount_base_link" />
         </joint>
     </xacro:if>
-    <xacro:if value="${(en_imu == 'false')}">
+    <xacro:unless value="${en_imu}">
         <joint name="${camera_name}_base_mount_joint" type="fixed">
             <origin xyz="0 0 0" rpy="0 0 0" />
             <parent link="${camera_name}_base_link" />
             <child link="${camera_name}_mount_base_link" />
         </joint>
-    </xacro:if>
+    </xacro:unless>
 
     <joint name="${camera_name}_right_camera_joint" type="fixed">
         <parent link="${camera_name}_center"/>
@@ -202,7 +202,7 @@ Edited: 2019, Marti Morta Garriga, Wood.
     </gazebo>
 
     <!-- Simulate IMU using gazebo -->
-    <xacro:if value="${(en_imu == 'true')}">
+    <xacro:if value="${en_imu}">
         <gazebo reference="${camera_name}_imu_link">
             <gravity>true</gravity>
             <sensor name="imu_sensor" type="imu">

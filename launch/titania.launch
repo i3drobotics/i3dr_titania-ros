@@ -62,7 +62,7 @@
     <arg name="state_publisher" default="true"/>
     <group if="$(arg state_publisher)">
         <param name="$(arg camera_namespace)_robot_description" command="$(find xacro)/xacro '$(find i3dr_titania)/urdf/titania_scene.urdf.xacro' en_imu:=$(arg imu) camera_name:=$(arg urdf_namespace) en_mesh:=$(arg camera_mesh) en_collision:=true" />
-        <node name="robot_state_publisher_$(arg camera_namespace)" pkg="robot_state_publisher" type="state_publisher">
+        <node name="robot_state_publisher_$(arg camera_namespace)" pkg="robot_state_publisher" type="robot_state_publisher">
             <remap from="robot_description" to="$(arg camera_namespace)_robot_description"/>
         </node>
     </group>
