@@ -46,7 +46,7 @@
     <arg name="camera_mesh" default="true" />
     
     <arg name="new_gazebo_world" default="true"/>
-    <arg name="real" default="$(eval sim == 0 )"/>
+    <arg name="real" default="$(eval sim == 0 or camera_from_bag == 0 )"/>
     
     <!-- camera calibration files -->
     <arg name="calibration_folder" default="$(find i3dr_titania)/calibration/001" />
