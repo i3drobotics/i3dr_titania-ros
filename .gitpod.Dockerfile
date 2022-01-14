@@ -4,7 +4,9 @@ ENV ROS_DISTRO=melodic
 ENV PYLON_ROOT=/opt/pylon
 ENV PYLON_URl=https://www.baslerweb.com/fp-1589378344/media/downloads/software/pylon_software/pylon_6.1.1.19861-deb0_amd64.deb
 
-RUN sudo apt-get update
+RUN sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
 # install pylon
 RUN wget -O pylon.deb $PYLON_URl && sudo dpkg -i pylon.deb && $PYLON_ROOT/bin/pylon-config --version-major
