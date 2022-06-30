@@ -5,7 +5,7 @@
     <!-- algorithm 0: OpenCV block -->
     <!-- algorithm 1: OpenCV SGBM -->
     <!-- algorithm 2: I3DR SGM -->
-    <arg name="stereo_algorithm" default="0" />
+    <arg name="stereo_algorithm" default="2" />
     <!-- enable/disable stereo matcher interpolation (I3DRSGM only) -->
     <arg name="interp" default="false" />
     <!-- enable/disable rviz -->
@@ -49,17 +49,11 @@
     <arg name="real" default="$(eval sim == 0 or camera_from_bag == 0 )"/>
     
     <!-- camera calibration files -->
-    <arg name="calibration_folder" default="$(find i3dr_titania)/calibration/001" />
-
-    <arg unless="$(arg camera_from_bag)" name="cameraLeft_info_url" default="file://$(arg calibration_folder)/left.yaml" />
-    <arg unless="$(arg camera_from_bag)" name="cameraRight_info_url" default="file://$(arg calibration_folder)/right.yaml" />
-
-    <arg if="$(arg camera_from_bag)" name="cameraLeft_info_url" default="$(arg calibration_folder)/left.yaml" />
-    <arg if="$(arg camera_from_bag)" name="cameraRight_info_url" default="$(arg calibration_folder)/right.yaml" />
-
-    <!-- Be sure to change this to your cameras id -->
-    <arg name="camera_left_device_user_id" default="i3dr_titania_l"/> <!-- 40081086 / i3dr_titania_l -->
-    <arg name="camera_right_device_user_id" default="i3dr_titania_r"/>  <!-- 40081087 / i3dr_titania_r -->
+    <arg name="cameraLeft_info_url"  default="file://$(find i3dr_titania)/calibration/$(arg camera_serial)/left.yaml" />
+    <arg name="cameraRight_info_url" default="file://$(find i3dr_titania)/calibration/$(arg camera_serial)/right.yaml" />
+    
+    <arg name="camera_right_serial" default="$(arg camera_serial)r"/>
+    <arg name="camera_left_serial" default="$(arg camera_serial)l"/>
 
     <arg name="state_publisher" default="true"/>
     <group if="$(arg state_publisher)">
@@ -101,8 +95,8 @@
         <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
         <arg name="cameraLeft_info_url"  value="$(arg cameraLeft_info_url)" />
         <arg name="cameraRight_info_url" value="$(arg cameraRight_info_url)" />
-        <arg name="camera_left_device_user_id" value="$(arg camera_left_device_user_id)"/>
-        <arg name="camera_right_device_user_id" value="$(arg camera_right_device_user_id)"/>
+        <arg name="camera_left_device_user_id" value="$(arg camera_right_serial)"/>
+        <arg name="camera_right_device_user_id" value="$(arg camera_left_serial)"/>
         <arg name="gui" value="false"/>
     </include>
 
