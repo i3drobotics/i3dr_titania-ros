@@ -9,11 +9,11 @@ ROS driver for Titania stereo camera system from Industrial 3D Robotics.
 For an easy setup, a rosinstall file is provided in 'install' folder of this repo which can be used to get this package and it's dependent ros packages in your workspace. 
 In your ROS workspace use the following command:
 ```
-wstool init src https://raw.githubusercontent.com/i3drobotics/i3dr_titania-ros/master/install/i3dr_titania_https.rosinstall
+wstool init src https://raw.githubusercontent.com/i3drobotics/i3dr_titania-ros/main/install/i3dr_titania_https.rosinstall
 ```
 If you already have a wstool workspace setup then use the following command instead:
 ```
-wstool merge -t src https://raw.githubusercontent.com/i3drobotics/i3dr_titania-ros/master/install/i3dr_titania_https.rosinstall
+wstool merge -t src https://raw.githubusercontent.com/i3drobotics/i3dr_titania-ros/main/install/i3dr_titania_https.rosinstall
 wstool update -t src
 ```
 
@@ -33,7 +33,7 @@ In order to build the package, you need to configure rosdep (i.e. the ROS comman
 it knows how to resolve this dependency. This can be achieved by executing the following commands:
 
 ```
-sudo sh -c 'echo "yaml https://raw.githubusercontent.com/i3drobotics/pylon_camera/master/rosdep/pylon_sdk.yaml " > /etc/ros/rosdep/sources.list.d/15-plyon_camera.list'
+sudo sh -c 'echo "yaml https://raw.githubusercontent.com/i3drobotics/pylon_camera/main/rosdep/pylon_sdk.yaml " > /etc/ros/rosdep/sources.list.d/15-plyon_camera.list'
 rosdep update
 ```
 
