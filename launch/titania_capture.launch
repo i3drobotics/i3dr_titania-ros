@@ -7,6 +7,7 @@
     <!-- namespace for camera -->
     <arg name="camera_namespace" default="i3dr_titania"/>
     <arg name="exposure" default="40000"/>
+    <arg name="gain" default="0"/>
     <arg name="binning" default="1" />
     
     <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
@@ -26,7 +27,7 @@
     <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
         <!-- camera startup settings -->
         <arg name="exposure" value="$(eval arg('exposure')/arg('binning'))"/>
-        <arg name="gain" value="0"/>
+        <arg name="gain" value="$(arg gain)"/>
         <arg name="fps" value="10"/> <!-- if using hardware trigger MUST be higher than external trigger fps-->
         <arg name="hardware_trigger" value="true"/>
         <!-- camera calibration files-->

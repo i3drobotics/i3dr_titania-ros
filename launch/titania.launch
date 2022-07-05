@@ -41,6 +41,7 @@
     <arg name="localization" default="false" /> <!-- true: map, false: localise -->
 
     <arg name="exposure" default="20000"/>
+    <arg name="gain" default="0"/>
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="true" />
@@ -95,6 +96,7 @@
     <!-- Start image capture from camera -->
     <include if="$(arg real)" file="$(find i3dr_titania)/launch/titania_capture.launch">
         <arg name="exposure" value="$(arg exposure)"/>
+        <arg name="gain" value="$(arg gain)"/>
         <arg name="rviz" value="false" />
         <arg name="imu" value="$(arg imu)" />
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
