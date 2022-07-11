@@ -18,7 +18,7 @@
     <!-- simulate camera with gazebo -->
     <arg name="sim" default="false"/>
     <!-- namespace for camera -->
-    <arg name="camera_namespace" default="$(eval 'i3dr_' + arg('camera_type') + '_' + arg('camera_serial'))"/>
+    <arg name="camera_namespace" default="i3dr_titania_$(arg camera_serial)"/>
     <arg name="imu" default="false" /> <!-- ONLY IMPLIMENTED IN SIMULATION -->
     <arg name="depth_max" default="100" />
     <arg name="depth_min" default="0.01" />
