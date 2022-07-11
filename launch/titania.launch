@@ -55,8 +55,8 @@
     <arg name="cameraLeft_info_url"  default="file://$(arg calibration_folder)/left.yaml" />
     <arg name="cameraRight_info_url"  default="file://$(arg calibration_folder)/right.yaml" />
     
-    <arg name="camera_right_serial" default="$(arg camera_serial)r"/>
-    <arg name="camera_left_serial" default="$(arg camera_serial)l"/>
+    <arg name="camera_left_serial" default="I3DRTitania_$(arg camera_serial)_l"/>
+    <arg name="camera_right_serial" default="I3DRTitania_$(arg camera_serial)_r"/>
 
     <arg name="state_publisher" default="true"/>
     <group if="$(arg state_publisher)">
